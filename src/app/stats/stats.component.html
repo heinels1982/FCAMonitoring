@@ -1,0 +1,32 @@
+<h5>Event Search</h5>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2"> 
+      <form [formGroup]="claimForm" (ngSubmit)="onSubmit()" >
+        <div class="formGroup">
+        <label for="policyNumber">Node</label>
+        <input type="text"
+               id="policyNumber" 
+               class="form-control"
+               formControlName="policyNumber"> 
+        <span *ngIf="!claimForm.get('policyNumber').valid && claimForm.get('policyNumber').touched"
+        class="help-block">
+          Please enter a Node
+        </span>
+        
+            <label for="policyNumber">TicketNumber</label>
+            <input type="text"
+                   id="firstName" 
+                   class="form-control" [maxLength]=30 size=20
+                   formControlName="firstName"> 
+                  <span *ngIf="!claimForm.get('firstName').valid && claimForm.get('firstName').touched"
+                  class="help-block">
+                    Please enter first name
+                  </span>
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  </div>
