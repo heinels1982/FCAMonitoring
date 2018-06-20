@@ -57,10 +57,25 @@ export class AdministrationComponent implements OnInit {
     .attr("width", function(d, i) {
       return x(d);
     } )
-    
     .attr("height",function(d,i) {
       return y(1)-1
-    });      
+    });
+
+    svg.selectAll(".bar-label")
+    .data(data)
+    .enter()
+    .append("text")
+    .classed("bar-label", true) 
+    .attr("x",0)
+    .attr("y",function(d,i) {
+      return i * 36
+    })
+    .attr("dy", function(d,i) {
+      return y(1)/1.5 - 2
+    })
+    .text(function(d,i) {
+      return d;
+    });
   }
 
 }
