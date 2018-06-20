@@ -7,4 +7,8 @@ export class StatsService {
     saveStats(stats: any) {
         return this.http.post('https://heinels-ng-http.firebaseio.com/statsjson', stats);
     }
+
+    getStatsData() {
+        return this.http .get('http://localhost:8080/stats');
+    }
 }

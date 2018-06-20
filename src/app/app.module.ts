@@ -10,7 +10,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { StatsComponent } from './stats/stats.component';
 import { AddressBookComponent } from './address-book/address-book.component';
 import { SearchComponent } from './search/search.component';
-import {StatsService} from './stats.service';
+import { StatsService} from './stats.service';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 
