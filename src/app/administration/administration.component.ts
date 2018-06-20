@@ -1,6 +1,7 @@
 import { Component, OnInit , ElementRef} from '@angular/core';
 import {StatsService} from '../stats.service';
 import * as d3 from 'd3';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-administration',
@@ -8,27 +9,35 @@ import * as d3 from 'd3';
   styleUrls: ['./administration.component.css']
 })
 export class AdministrationComponent implements OnInit {
+ 
 
   ngOnInit() {
-    this.buildSVG();
+
     this.statsService.getStatsData()
       .subscribe(
-        (response) => console.log(response), 
+        (response) => { 
+          var stats = response.json();
+          
+          this.buildSVG(stats);
+        },
         (error) => console.log(error)
       )
   }
-
+ 
   host;
   svg;
- 
+  
   constructor (private _element : ElementRef, private statsService : StatsService) {
     this.host = d3.select(this._element.nativeElement);
   }
 
-  buildSVG() : void {
-    var w = 800;
-    var h = 450;
-    var data = [132,71,337,93,78,43,20,16,30,8, 17,21];
+  buildSVG(stats) : void {
+    console.log("jQuery" + $.map(stats, function(el) { return el.count }));
+  
+    var w = 180;
+    var h = 145;
+    var data = $.map(stats, function(el) { return el.count });
+    
     var x = d3.scaleLinear().domain([0,d3.max(data)]).range([0,w]);
     var y = d3.scaleLinear().domain([0,data.length])
             .range([0,h]);
@@ -39,36 +48,19 @@ export class AdministrationComponent implements OnInit {
     svg.selectAll(".bar")
     .data(data)
     .enter()
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x",0)
-        .attr("y",function(d,i) {
-          return y(i);
-        })
-        .attr("width", function(d, i) {
-          return x(d);
-        } )
-        
-        .attr("height",function(d,i){
-          return y(1)-1
-        });
-
-    // this.svg = this.host.append('svg')
-    // .attr("id","chart")
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x",0)
+    .attr("y",function(d,i) {
+      return y(i);
+    })
+    .attr("width", function(d, i) {
+      return x(d);
+    } )
     
-    // this.svg.selectAll(".bar")
-    // .data(data)
-    // .enter()
-    // .append("rect")
-    // .attr("class", "bar")
-    // .attr("x", 0)
-    // .attr("y", function(d,i) {
-    //   return d;
-    // })
-    // .attr("height", 20)
-
-         
-        
+    .attr("height",function(d,i) {
+      return y(1)-1
+    });      
   }
 
 }
